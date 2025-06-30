@@ -1,5 +1,5 @@
 :root {
-  --font-stack: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-stack: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   --text-color: rgba(255, 255, 255, 0.87);
   --background-color: #242424;
   --accent-color: #d98d00;
@@ -24,8 +24,8 @@
   :root {
     --text-color: #213547;
     --background-color: #ffffff;
-    --accent-color: #646cff;
-    --accent-hover: #747bff;
+    --accent-color: #ffc743;
+    --accent-hover: #ffae2b;
     --border-color: #e0e0e0;
     --input-bg: #f9f9f9;
   }
@@ -42,14 +42,14 @@
 
 body {
   margin: 0;
+  padding: 0;
   background-color: var(--background-color);
   color: var(--text-color);
-  height: 100dvh;
+  min-height: 100dvh;
 }
 
-#root {
-  height: 100dvh;
-}
+
+
 
 /* 
 

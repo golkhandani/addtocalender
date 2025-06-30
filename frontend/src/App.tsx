@@ -216,97 +216,95 @@ END:VCALENDAR
           <br />
           I got you. Just share a picture or screenshot — and I’ll give you calendar magic in seconds.
         </p>
-        <button className={styles.uploadBtn} onClick={promptInstall}>Install PWA</button>
+        <button className={styles.installBtn} onClick={promptInstall}>Install PWA</button>
       </header>
 
       <div className={styles.main}>
         <main className={styles.columns}>
-          <main className={styles.columns}>
-            {/* Column 1: Image Upload */}
-            <div className={styles.column}>
-              <h3>Upload Image</h3>
-              <input
-                id="fileInput"
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                style={{ display: 'none' }}
-              />
-              <label htmlFor="fileInput" className={styles.uploadBtn}>
-                Upload Your Photo
-              </label>
+          {/* Column 1: Image Upload */}
+          <div className={styles.column}>
+            <h3>Upload Image</h3>
+            <input
+              id="fileInput"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+            />
+            <label htmlFor="fileInput" className={styles.uploadBtn}>
+              Upload Your Photo
+            </label>
 
-              {image && <img src={image} alt="Uploaded" />}
-            </div>
+            {image && <img src={image} alt="Uploaded" />}
+          </div>
 
-            {/* Column 2: Extracted Text */}
-            <div className={styles.column}>
-              <h3>Extracted Text</h3>
-              {loading ? (
-                <p>Extracting text...</p>
-              ) : (
-                <textarea className={styles.textArea} readOnly value={extractedText}></textarea>
-              )}
-            </div>
+          {/* Column 2: Extracted Text */}
+          <div className={styles.column}>
+            <h3>Extracted Text</h3>
+            {loading ? (
+              <p>Extracting text...</p>
+            ) : (
+              <textarea className={styles.textArea} readOnly value={extractedText}></textarea>
+            )}
+          </div>
 
-            {/* Column 3: Calendar Info */}
-            <div className={styles.column}>
-              <h3>Calendar Info</h3>
-              {eventData ? (
-                <div className={styles.form}>
+          {/* Column 3: Calendar Info */}
+          <div className={styles.column}>
+            <h3>Calendar Info</h3>
+            {eventData ? (
+              <div className={styles.form}>
+                <input
+                  type="text"
+                  value={eventData.title}
+                  onChange={(e) => setEventData({ ...eventData, title: e.target.value })}
+                />
+
+                <label>
+                  Location:
                   <input
                     type="text"
-                    value={eventData.title}
-                    onChange={(e) => setEventData({ ...eventData, title: e.target.value })}
+                    value={eventData.location}
+                    onChange={(e) => setEventData({ ...eventData, location: e.target.value })}
                   />
+                </label>
 
-                  <label>
-                    Location:
-                    <input
-                      type="text"
-                      value={eventData.location}
-                      onChange={(e) => setEventData({ ...eventData, location: e.target.value })}
-                    />
-                  </label>
+                <label>
+                  Date and time:
+                </label>
+                <input
+                  type="text"
+                  value={eventData.date}
+                  onChange={(e) => setEventData({ ...eventData, date: e.target.value })}
+                />
+                <input
+                  type="text"
+                  value={eventData.startTime}
+                  onChange={(e) => setEventData({ ...eventData, startTime: e.target.value })}
+                />
 
-                  <label>
-                    Date and time:
-                  </label>
-                  <input
-                    type="text"
-                    value={eventData.date}
-                    onChange={(e) => setEventData({ ...eventData, date: e.target.value })}
-                  />
-                  <input
-                    type="text"
-                    value={eventData.startTime}
-                    onChange={(e) => setEventData({ ...eventData, startTime: e.target.value })}
-                  />
+                <input
+                  type="text"
+                  value={eventData.endTime}
+                  onChange={(e) => setEventData({ ...eventData, endTime: e.target.value })}
+                />
 
-                  <input
-                    type="text"
-                    value={eventData.endTime}
-                    onChange={(e) => setEventData({ ...eventData, endTime: e.target.value })}
-                  />
+                <div className={styles.buttonRow}>
 
-                  <div className={styles.buttonRow}>
-
-                    <button className={styles.googleBtn} onClick={() => handleGoogleCalendar(eventData)}>
-                      Google
-                    </button>
-                    <button className={styles.outlookBtn} onClick={() => handleOutlookCalendar(eventData)}>
-                      Outlook
-                    </button>
-                    <button className={styles.appleBtn} onClick={() => handleAppleCalendar(eventData)}>
-                      Apple(.ics) File
-                    </button>
-                  </div>
+                  <button className={styles.googleBtn} onClick={() => handleGoogleCalendar(eventData)}>
+                    Google
+                  </button>
+                  <button className={styles.outlookBtn} onClick={() => handleOutlookCalendar(eventData)}>
+                    Outlook
+                  </button>
+                  <button className={styles.appleBtn} onClick={() => handleAppleCalendar(eventData)}>
+                    Apple(.ics) File
+                  </button>
                 </div>
-              ) : (
-                <p>Waiting for event data...</p>
-              )}
-            </div>
-          </main>
+              </div>
+            ) : (
+              <p>Waiting for event data...</p>
+            )}
+          </div>
         </main>
       </div>
 
