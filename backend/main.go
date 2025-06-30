@@ -66,7 +66,7 @@ func useCors(handler http.Handler) http.Handler {
 
 func main() {
 	fmt.Println("Welcome to \"Add To Cal\" backend")
-	err := godotenv.Load()
+	err := godotenv.Load("./etc/secrets/.env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
