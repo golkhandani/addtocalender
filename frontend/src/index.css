@@ -39,6 +39,26 @@
   padding: 0;
 }
 
+input,
+textarea {
+  transition: var(--accent-color) 0.2s ease;
+  border-radius: 8px;
+}
+
+input:hover,
+textarea:hover {
+  border-color: var(--accent-color);
+  outline: none;
+  border-radius: 8px;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--accent-color);
+  outline: 2px solid var(--accent-color);
+  border-radius: 8px;
+}
+
 
 body {
   margin: 0;

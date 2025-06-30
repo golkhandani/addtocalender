@@ -58,7 +58,6 @@
   width: calc(100% - 2rem);
   flex: 1;
   padding: 0.5rem;
-
 }
 
 .column img {
@@ -82,6 +81,86 @@
   background-color: var(--accent-hover);
 }
 
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: space-between;
+  min-height: 80dvh;
+}
+
+.form .inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+
+.form .inputs label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.form input {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  box-sizing: border-box;
+  margin: 0.5rem 0;
+}
+
+.buttonRow {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.buttonRow button {
+  flex: 1;
+  min-width: 45%;
+  border-radius: 16px;
+  min-height: 48px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.appleBtn {
+  background-color: #333;
+  color: white;
+}
+
+.appleBtn:hover {
+  background-color: #111;
+}
+
+.googleBtn {
+  background-color: #da0c0c;
+  color: white;
+}
+
+.googleBtn:hover {
+  background-color: #980606;
+}
+
+.outlookBtn {
+  background-color: #0078d4;
+  color: white;
+}
+
+.outlookBtn:hover {
+  background-color: #005da0;
+}
 
 @media (min-width: 768px) {
 
@@ -125,5 +204,9 @@
     margin: 1rem;
     max-width: calc(100% - 2rem);
     max-height: 100%;
+  }
+
+  .form {
+    min-height: 50dvh;
   }
 }

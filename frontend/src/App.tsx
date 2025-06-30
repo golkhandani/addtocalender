@@ -253,41 +253,42 @@ END:VCALENDAR
             <h3>Calendar Info</h3>
             {eventData ? (
               <div className={styles.form}>
-                <input
-                  type="text"
-                  value={eventData.title}
-                  onChange={(e) => setEventData({ ...eventData, title: e.target.value })}
-                />
-
-                <label>
-                  Location:
+                <div className={styles.inputs}>
                   <input
                     type="text"
-                    value={eventData.location}
-                    onChange={(e) => setEventData({ ...eventData, location: e.target.value })}
+                    value={eventData.title}
+                    onChange={(e) => setEventData({ ...eventData, title: e.target.value })}
                   />
-                </label>
 
-                <label>
-                  Date and time:
-                </label>
-                <input
-                  type="text"
-                  value={eventData.date}
-                  onChange={(e) => setEventData({ ...eventData, date: e.target.value })}
-                />
-                <input
-                  type="text"
-                  value={eventData.startTime}
-                  onChange={(e) => setEventData({ ...eventData, startTime: e.target.value })}
-                />
+                  <label>
+                    Location:
+                    <input
+                      type="text"
+                      value={eventData.location}
+                      onChange={(e) => setEventData({ ...eventData, location: e.target.value })}
+                    />
+                  </label>
 
-                <input
-                  type="text"
-                  value={eventData.endTime}
-                  onChange={(e) => setEventData({ ...eventData, endTime: e.target.value })}
-                />
+                  <label>
+                    Date and time:
+                  </label>
+                  <input
+                    type="text"
+                    value={eventData.date}
+                    onChange={(e) => setEventData({ ...eventData, date: e.target.value })}
+                  />
+                  <input
+                    type="text"
+                    value={eventData.startTime}
+                    onChange={(e) => setEventData({ ...eventData, startTime: e.target.value })}
+                  />
 
+                  <input
+                    type="text"
+                    value={eventData.endTime}
+                    onChange={(e) => setEventData({ ...eventData, endTime: e.target.value })}
+                  />
+                </div>
                 <div className={styles.buttonRow}>
 
                   <button className={styles.googleBtn} onClick={() => handleGoogleCalendar(eventData)}>
