@@ -96,8 +96,8 @@ function App() {
   function generateICS(event: EventData) {
     if (!event) return;
 
-    const start = new Date(`${event.date} ${event.startTime}`);
-    const end = new Date(`${event.date} ${event.endTime}`);
+    const start = parseEventDate(event.date, event.startTime);
+    const end = parseEventDate(event.date, event.endTime);
 
     const toICS = `
 BEGIN:VCALENDAR
@@ -128,6 +128,20 @@ END:VCALENDAR
       .split('.')[0] + 'Z';
   }
 
+  function parseEventDate(dateStr: string, timeStr: string) {
+    const [month, dayWithComma, year] = dateStr.split(" ");
+    const day = dayWithComma.replace(",", "");
+
+    const [time, modifier] = timeStr.split(" ");
+    let [hour, minute = 0] = time.split(":").map(Number);
+
+    if (modifier.toLowerCase() === "pm" && hour < 12) hour += 12;
+    if (modifier.toLowerCase() === "am" && hour === 12) hour = 0;
+
+    const date = new Date(`${month} ${day}, ${year} ${hour}:${minute}`);
+    return date;
+  }
+
   function handleGoogleCalendar(event: typeof eventData | null) {
     if (!event) {
       alert('Event data is missing.');
@@ -135,8 +149,11 @@ END:VCALENDAR
     }
 
     try {
-      const start = new Date(`${event.date} ${event.startTime}`);
-      const end = new Date(`${event.date} ${event.endTime}`);
+      const start = parseEventDate(event.date, event.startTime);
+      const end = parseEventDate(event.date, event.endTime);
+
+      console.log(start, end);
+
 
       const formatDate = (d: Date) =>
         d.toISOString().replace(/[-:]|\.000/g, '').slice(0, 15) + 'Z';
@@ -149,6 +166,8 @@ END:VCALENDAR
 
       window.open(url, '_blank');
     } catch (err) {
+      console.log(err);
+
       alert('Error preparing Google Calendar link.');
     }
   }
@@ -159,8 +178,8 @@ END:VCALENDAR
     }
 
     try {
-      const start = new Date(`${event.date} ${event.startTime}`);
-      const end = new Date(`${event.date} ${event.endTime}`);
+      const start = parseEventDate(event.date, event.startTime);
+      const end = parseEventDate(event.date, event.endTime);
 
       const url = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(
         event.title
