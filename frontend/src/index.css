@@ -6,6 +6,7 @@
   --accent-hover: #dc8f00;
   --border-color: #3a3a3a;
   --input-bg: #1a1a1a;
+  --header-height: 240px;
 
   font-family: var(--font-stack);
   line-height: 1.5;

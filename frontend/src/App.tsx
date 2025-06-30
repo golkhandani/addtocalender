@@ -48,9 +48,11 @@ function App() {
   const [eventData, setEventData] = useState<EventData | null>(null);
 
 
+  const url = "https://addtocalender.onrender.com/parse";
+  // 'http://localhost:3001/parse'
 
   async function aiParseEvent(ocrText: string) {
-    const res = await fetch('https://addtocalender.onrender.com/parse', {
+    const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text: ocrText }),
@@ -132,7 +134,7 @@ END:VCALENDAR
     const [month, dayWithComma, year] = dateStr.split(" ");
     const day = dayWithComma.replace(",", "");
 
-    const [time, modifier] = timeStr.split(" ");
+    const [time = "00:00", modifier = "pm"] = timeStr.split(" ");
     let [hour, minute = 0] = time.split(":").map(Number);
 
     if (modifier.toLowerCase() === "pm" && hour < 12) hour += 12;
@@ -216,7 +218,10 @@ END:VCALENDAR
           <br />
           I got you. Just share a picture or screenshot — and I’ll give you calendar magic in seconds.
         </p>
-        <button className={styles.installBtn} onClick={promptInstall}>Install PWA</button>
+        <button className={`${styles.btn} ${styles.installBtn}`}
+          onClick={promptInstall}>
+          Install PWA
+        </button>
       </header>
 
       <div className={styles.main}>
@@ -231,7 +236,7 @@ END:VCALENDAR
               onChange={handleFileChange}
               style={{ display: 'none' }}
             />
-            <label htmlFor="fileInput" className={styles.uploadBtn}>
+            <label htmlFor="fileInput" className={`${styles.btn} ${styles.uploadBtn}`}>
               Upload Your Photo
             </label>
 

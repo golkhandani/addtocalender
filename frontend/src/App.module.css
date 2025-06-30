@@ -1,37 +1,42 @@
+/* Header */
 .header {
-  text-align: center;
-  max-width: 90%;
-  min-height: 320px;
-  margin: 0px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
+  text-align: center;
+
+  margin: 0 auto;
   padding: 1rem;
+
 }
 
-
-.installBtn {
-  height: 48px;
-  background-color: var(--accent-color);
-  color: var(--text-color);
+.btn {
+  min-height: 48px;
+  max-height: 48px;
+  margin: 1rem;
+  border-radius: 8px;
+  border: none;
+  outline: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1rem;
-  border-radius: 8px;
-  outline: none;
-  border: none;
+  padding: 0 1rem;
+}
+
+.installBtn {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease;
 }
 
 .installBtn:hover {
   background-color: var(--accent-hover);
 }
 
+/* Main & Layout */
 .main {
-  margin: 1rem auto;
-  max-width: 90%;
-  min-height: 100dvh;
+  margin: 1rem 1rem;
 }
 
 .columns {
@@ -41,23 +46,14 @@
 }
 
 .column {
+  width: 100%;
+  padding: 1rem;
   border: 2px solid black;
   border-radius: 8px;
   text-align: center;
-  width: 100%;
-  min-height: 80dvh;
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: stretch;
-}
-
-
-.column textarea {
-  margin: 1rem;
-  width: calc(100% - 2rem);
-  flex: 1;
-  padding: 0.5rem;
 }
 
 .column img {
@@ -66,57 +62,65 @@
   max-height: 50%;
 }
 
-.uploadBtn {
-  min-height: 48px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.column textarea {
+  flex: 1;
   margin: 1rem;
+  width: calc(100% - 2rem);
+  min-height: 320px;
+  padding: 0.5rem;
+}
+
+/* Upload Button */
+.uploadBtn {
   background-color: var(--accent-color);
   color: var(--text-color);
-  border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
 
 .uploadBtn:hover {
   background-color: var(--accent-hover);
 }
 
-
+/* Form */
 .form {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 1rem;
   margin-top: 1rem;
-  justify-content: space-between;
-  min-height: 80dvh;
 }
 
 .form .inputs {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  width: 100%;
 }
 
 .form .inputs label {
   display: flex;
   flex-direction: column;
-  font-weight: 500;
   color: var(--text-color);
 }
 
 .form input {
+  margin: 0.5rem;
   padding: 0.5rem;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid var(--border-color);
   background-color: var(--background-color);
   color: var(--text-color);
-  box-sizing: border-box;
-  margin: 0.5rem 0;
+  transition: border-color 0.2s ease;
+  overflow: visible;
 }
 
+.form input:hover,
+textarea:hover {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+/* Calendar Button Row */
 .buttonRow {
-  margin-top: 1rem;
+  margin: 1rem 0px;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -126,15 +130,14 @@
 .buttonRow button {
   flex: 1;
   min-width: 45%;
-  border-radius: 16px;
   min-height: 48px;
+  border-radius: 8px;
   border: none;
   outline: none;
-  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-
+/* Calendar Button Styles */
 .appleBtn {
   background-color: #333;
   color: white;
@@ -162,51 +165,33 @@
   background-color: #005da0;
 }
 
+/* Responsive Overrides */
 @media (min-width: 768px) {
-
   .header {
+    height: var(--header-height);
     align-items: center;
-    min-height: 0px;
-    height: 240px;
+    min-height: 0;
   }
 
-  .installBtn {
-    padding: 0 1rem;
-  }
+
 
   .main {
-    margin: 1rem auto;
-    max-height: calc(100dvh - 240px - 2rem);
-    min-height: calc(100dvh - 240px - 2rem);
+    height: calc(100dvh - var(--header-height) - 2rem);
   }
 
   .columns {
-
-    display: flex;
     flex-direction: row;
-    gap: 1rem;
-    max-height: calc(100dvh - 240px - 2rem);
+    height: calc(100dvh - var(--header-height) - 2rem);
   }
 
   .column {
-    border: 2px solid black;
-    border-radius: 8px;
-    text-align: center;
-    width: 100%;
-    min-height: calc(100dvh - 240px - 2rem);
-    display: flex;
-    flex-direction: column;
-    justify-content: stretch;
+    min-height: calc(100dvh - var(--header-height) - 2rem);
     overflow: scroll;
   }
 
   .column img {
-    margin: 1rem;
-    max-width: calc(100% - 2rem);
-    max-height: 100%;
+    width: auto;
+    max-height: max-content;
   }
 
-  .form {
-    min-height: 50dvh;
-  }
 }
