@@ -50,7 +50,7 @@ function App() {
 
 
   async function aiParseEvent(ocrText: string) {
-    const res = await fetch('http://localhost:3001/parse', {
+    const res = await fetch('https://addtocalender.onrender.com/parse', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text: ocrText }),
