@@ -5,16 +5,27 @@
   justify-content: center;
   align-items: stretch;
   text-align: center;
-
   margin: 0 auto;
   padding: 1rem;
+  min-height: 100dvh;
 
+}
+
+.title-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title-section * {
+  margin: 1rem;
 }
 
 .btn {
   min-height: 48px;
   max-height: 48px;
-  margin: 1rem;
+  margin: 1rem auto;
   border-radius: 8px;
   border: none;
   outline: none;
@@ -22,12 +33,38 @@
   justify-content: center;
   align-items: center;
   padding: 0 1rem;
+  text-decoration: none;
 }
+
+
+
+.process-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 240px;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease;
+}
+
+
 
 .installBtn {
   background-color: var(--accent-color);
   color: var(--text-color);
   transition: background-color 0.3s ease;
+}
+
+.iosHint {
+  padding: 1rem;
+  background: var(--border-color);
+  color: var(--text-color);
+  border-radius: 8px;
+  margin: 1rem auto;
+  text-align: center;
+  font-size: 0.95rem;
 }
 
 .installBtn:hover {
@@ -36,18 +73,32 @@
 
 /* Main & Layout */
 .main {
-  margin: 1rem 1rem;
+  min-height: 100dvh;
+  display: flex;
+  width: 100dvw;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
 .columns {
   display: flex;
   flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  text-align: center;
   gap: 1rem;
+  min-height: calc(100dvh -2rem);
 }
 
 .column {
+  flex: 1;
+  min-height: 30dvh;
   width: 100%;
   padding: 1rem;
+
   border: 2px solid black;
   border-radius: 8px;
   text-align: center;
@@ -64,10 +115,12 @@
 
 .column textarea {
   flex: 1;
-  margin: 1rem;
-  width: calc(100% - 2rem);
+  margin: 0.5rem;
+  width: calc(100% - 1rem);
   min-height: 320px;
   padding: 0.5rem;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 /* Upload Button */
@@ -102,7 +155,6 @@
 }
 
 .form input {
-  margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 8px;
   border: 1px solid var(--border-color);
@@ -165,33 +217,23 @@ textarea:hover {
   background-color: #005da0;
 }
 
-/* Responsive Overrides */
+
 @media (min-width: 768px) {
-  .header {
-    height: var(--header-height);
-    align-items: center;
-    min-height: 0;
-  }
-
-
-
-  .main {
-    height: calc(100dvh - var(--header-height) - 2rem);
-  }
 
   .columns {
+    display: flex;
     flex-direction: row;
-    height: calc(100dvh - var(--header-height) - 2rem);
-  }
-
-  .column {
-    min-height: calc(100dvh - var(--header-height) - 2rem);
-    overflow: scroll;
+    justify-content: stretch;
+    align-items: stretch;
+    text-align: center;
+    gap: 1rem;
+    min-height: calc(100dvh - 2rem);
+    max-height: calc(100dvh - 2rem);
   }
 
   .column img {
-    width: auto;
-    max-height: max-content;
+    margin: 1rem auto;
+    max-width: 100%;
+    max-height: auto;
   }
-
 }

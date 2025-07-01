@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './App.module.css';
 import Tesseract from 'tesseract.js';
+import { isRunningStandalone } from './utils/isRunningStandalone';
+import { isRunningOnMobile } from './utils/isMobileBrowser';
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
 type EventData = {
   title: string;
@@ -19,38 +22,53 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-let deferredPrompt: BeforeInstallPromptEvent | null = null;
+
+export function useInstallPrompt() {
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+      setIsVisible(true);
+    };
+
+    window.addEventListener("beforeinstallprompt", handler);
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  const promptInstall = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      setDeferredPrompt(null);
+      setIsVisible(false);
+      return outcome; // 'accepted' or 'dismissed'
+    }
+  };
+
+  return { isVisible, promptInstall };
+}
 
 
-window.addEventListener('beforeinstallprompt', (e: Event) => {
-  e.preventDefault();
-  deferredPrompt = e as BeforeInstallPromptEvent;
-});
 
-// On button click:
-const promptInstall = () => {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choice) => {
-      if (choice.outcome === 'accepted') {
-        console.log('User accepted PWA install');
-      }
-      deferredPrompt = null;
-    });
-  }
-};
-
-
-function App() {
+export default function App() {
+  const isStandalone = isRunningStandalone()
+  const isMobile = isRunningOnMobile();
   const [image, setImage] = useState<string | null>(null);
   const [extractedText, setExtractedText] = useState('');
   const [loading, setLoading] = useState(false);
   const [eventData, setEventData] = useState<EventData | null>(null);
+  const { promptInstall } = useInstallPrompt();
 
 
-  const url = "https://addtocalender.onrender.com/parse";
-  // 'http://localhost:3001/parse'
+  console.log("isStandalone", isStandalone)
+  console.log("isMobile", isMobile)
+  console.log("apiUrl", apiUrl);
 
+
+  const url = `${apiUrl}/parse`;
   async function aiParseEvent(ocrText: string) {
     const res = await fetch(url, {
       method: 'POST',
@@ -61,7 +79,7 @@ function App() {
     if (!res.ok) throw new Error('Failed to parse event');
 
     const data = await res.json();
-    setEventData(data);
+    return data;
   }
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -84,7 +102,12 @@ function App() {
     Tesseract.recognize(imageUrl, 'eng')
       .then(({ data: { text } }) => {
         setExtractedText(text);
-        return aiParseEvent(text); // 🔥 call your backend here
+        aiParseEvent(text).then((data) => {
+          setEventData(data)
+        }).catch((err) => {
+          console.error('AI error:', err);
+          setExtractedText('Failed to parse text.');
+        });
       })
       .catch((err) => {
         console.error('OCR error:', err);
@@ -211,24 +234,42 @@ END:VCALENDAR
   return (
     <>
       <header className={styles.header}>
-        <h1 className={styles.title}>Add it to My Cal 📆</h1>
-        <p className={styles.description}>
-          Tired of missing events because you were too lazy to say
-          <i> “Hey Siri, set a calendar reminder...”</i>?
-          <br />
-          I got you. Just share a picture or screenshot — and I’ll give you calendar magic in seconds.
-        </p>
-        <button className={`${styles.btn} ${styles.installBtn}`}
-          onClick={promptInstall}>
-          Install PWA
-        </button>
+        <div className={styles['title-section']}>
+          <h1 className={styles.title}>Add it to My Calender 📆</h1>
+          <p className={styles.description}>
+            Tired of missing events because you were too lazy to say
+            <i> “Hey Siri, set a calendar reminder...”</i>?
+            <br />
+            I got you. Just share a picture or screenshot — and I’ll give you calendar magic in seconds.
+          </p>
+          <a className={`${styles['btn']} ${styles['process-btn']} `}
+            href="#proccess">
+            Process
+          </a>
+        </div>
+
+        <div>
+          {
+            !isStandalone && !isMobile &&
+            <button className={`${styles.btn} ${styles.installBtn}`}
+              onClick={promptInstall}>
+              Install PWA
+            </button>
+          }
+          {
+            !isStandalone && isMobile &&
+            <div className={styles.iosHint}>
+              Tap <b>Share</b> then <b>Add to Home Screen</b> to install this app.
+            </div>
+          }
+        </div>
+
       </header>
 
-      <div className={styles.main}>
+      <div className={styles.main} id='proccess'>
         <main className={styles.columns}>
-          {/* Column 1: Image Upload */}
           <div className={styles.column}>
-            <h3>Upload Image</h3>
+            <h3>1.Upload Image</h3>
             <input
               id="fileInput"
               type="file"
@@ -243,19 +284,24 @@ END:VCALENDAR
             {image && <img src={image} alt="Uploaded" />}
           </div>
 
-          {/* Column 2: Extracted Text */}
           <div className={styles.column}>
-            <h3>Extracted Text</h3>
-            {loading ? (
-              <p>Extracting text...</p>
-            ) : (
-              <textarea className={styles.textArea} readOnly value={extractedText}></textarea>
-            )}
+            <h3>2.Extracted Text</h3>
+            {
+              !loading && !extractedText && <p>Waiting to extract text...</p>
+            }
+            {
+              loading && !extractedText && <p>Extracting text...</p>
+            }
+            {
+              extractedText &&
+              <textarea
+                className={styles.textArea}
+                readOnly value={extractedText}></textarea>
+            }
           </div>
 
-          {/* Column 3: Calendar Info */}
           <div className={styles.column}>
-            <h3>Calendar Info</h3>
+            <h3>3.Calendar Info</h3>
             {eventData ? (
               <div className={styles.form}>
                 <div className={styles.inputs}>
@@ -313,12 +359,7 @@ END:VCALENDAR
           </div>
         </main>
       </div>
-
-
     </>
-
-
   );
 }
 
-export default App;
