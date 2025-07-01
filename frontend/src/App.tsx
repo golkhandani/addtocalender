@@ -235,7 +235,7 @@ END:VCALENDAR
     <>
       <header className={styles.header}>
         <div className={styles['title-section']}>
-          <h1 className={styles.title}>Add it to My Calender 📆</h1>
+          <h1 className={styles.title}>Add it to My Calendar 📆</h1>
           <p className={styles.description}>
             Tired of missing events because you were too lazy to say
             <i> “Hey Siri, set a calendar reminder...”</i>?
