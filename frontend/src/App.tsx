@@ -115,9 +115,7 @@ export default function App() {
   function generateICS(event: EventData) {
     if (!event) return;
 
-    const start = parseEventDate(event.date, event.startTime);
-    const end = parseEventDate(event.date, event.endTime);
-
+    const { start, end } = getParsedEventDate(event);
     const toICS = `
 BEGIN:VCALENDAR
 VERSION:2.0
@@ -140,19 +138,19 @@ END:VCALENDAR
     URL.revokeObjectURL(url);
   }
 
-  function formatDate(date: Date) {
-    return date
-      .toISOString()
-      .replace(/[-:]/g, '')
-      .split('.')[0] + 'Z';
-  }
+
 
   function parseEventDate(dateStr: string, timeStr: string) {
-    const [month, dayWithComma, year] = dateStr.split(" ");
+    const now = new Date();
+    const [
+      month = now.getMonth().toString(),
+      dayWithComma = now.getDay().toString(),
+      year = now.getFullYear().toString()
+    ] = dateStr.split(" ");
     const day = dayWithComma.replace(",", "");
 
-    const [time = "00:00", modifier = "pm"] = timeStr.split(" ");
-    let [hour, minute = 0] = time.split(":").map(Number);
+    const [time = "00:00", modifier = "am"] = timeStr.split(" ");
+    let [hour = 0, minute = 0] = time.split(":").map(Number);
 
     if (modifier.toLowerCase() === "pm" && hour < 12) hour += 12;
     if (modifier.toLowerCase() === "am" && hour === 12) hour = 0;
@@ -161,6 +159,24 @@ END:VCALENDAR
     return date;
   }
 
+  function getParsedEventDate(event: EventData) {
+    const startTime = event.startTime.trim() === "" ? "12:00 am" : event.startTime.trim();
+    const endTime = event.endTime.trim() === "" ? "11:59 pm" : event.endTime.trim();
+
+
+    const start = parseEventDate(event.date, startTime);
+    const end = parseEventDate(event.date, endTime);
+
+
+    return {
+      start,
+      end
+    }
+  }
+
+  const formatDate = (d: Date) =>
+    d.toISOString().replace(/[-:]|\.000/g, '').slice(0, 15) + 'Z';
+
   function handleGoogleCalendar(event: typeof eventData | null) {
     if (!event) {
       alert('Event data is missing.');
@@ -168,11 +184,9 @@ END:VCALENDAR
     }
 
     try {
-      const start = parseEventDate(event.date, event.startTime);
-      const end = parseEventDate(event.date, event.endTime);
 
-      const formatDate = (d: Date) =>
-        d.toISOString().replace(/[-:]|\.000/g, '').slice(0, 15) + 'Z';
+
+      const { start, end } = getParsedEventDate(event);
 
       const url = `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(
         event.title
@@ -182,18 +196,22 @@ END:VCALENDAR
 
       window.open(url, '_blank');
     } catch (err) {
-      alert('Error preparing Google Calendar link.');
+      console.error(err)
+      setTimeout(() => {
+        alert('Error preparing Google Calendar link.');
+      })
     }
   }
   function handleOutlookCalendar(event: typeof eventData | null) {
     if (!event) {
-      alert('Event data is missing.');
+      setTimeout(() => {
+        alert('Event data is missing.');
+      })
       return;
     }
 
     try {
-      const start = parseEventDate(event.date, event.startTime);
-      const end = parseEventDate(event.date, event.endTime);
+      const { start, end } = getParsedEventDate(event);
 
       const url = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(
         event.title
@@ -203,7 +221,9 @@ END:VCALENDAR
 
       window.open(url, '_blank');
     } catch (err) {
-      alert('Error preparing Outlook Calendar link.');
+      setTimeout(() => {
+        alert('Error preparing Outlook Calendar link.');
+      })
     }
   }
 
@@ -216,7 +236,9 @@ END:VCALENDAR
     try {
       generateICS(event); // Assuming generateICS uses the current `eventData` internally
     } catch (err) {
-      alert('Could not generate .ics file for Apple Calendar.');
+      setTimeout(() => {
+        alert('Could not generate .ics file for Apple Calendar.');
+      })
     }
   }
 
