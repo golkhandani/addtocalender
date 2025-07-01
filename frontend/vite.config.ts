@@ -13,14 +13,13 @@ export default defineConfig({
         enabled: true
       },
       manifest: {
-        name: "Add it to My Cal",
-        short_name: "MyCal",
+        name: "Add to My Cal",
+        short_name: "AtC",
         description: "Convert images into calendar events instantly",
         start_url: "/",
         display: "standalone",
-        background_color: "#ffffff",
-        theme_color: "#646cff",
-
+        background_color: "#1f1f1f",
+        theme_color: "#1f1f1f",
         icons: [
           {
             src: 'pwa-192x192.png',
