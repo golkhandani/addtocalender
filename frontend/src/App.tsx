@@ -62,12 +62,6 @@ export default function App() {
   const [eventData, setEventData] = useState<EventData | null>(null);
   const { promptInstall } = useInstallPrompt();
 
-
-  console.log("isStandalone", isStandalone)
-  console.log("isMobile", isMobile)
-  console.log("apiUrl", apiUrl);
-
-
   const url = `${apiUrl}/parse`;
   async function aiParseEvent(ocrText: string) {
     const res = await fetch(url, {
@@ -177,9 +171,6 @@ END:VCALENDAR
       const start = parseEventDate(event.date, event.startTime);
       const end = parseEventDate(event.date, event.endTime);
 
-      console.log(start, end);
-
-
       const formatDate = (d: Date) =>
         d.toISOString().replace(/[-:]|\.000/g, '').slice(0, 15) + 'Z';
 
@@ -191,8 +182,6 @@ END:VCALENDAR
 
       window.open(url, '_blank');
     } catch (err) {
-      console.log(err);
-
       alert('Error preparing Google Calendar link.');
     }
   }
