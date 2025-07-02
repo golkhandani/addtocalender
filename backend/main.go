@@ -86,11 +86,11 @@ func main() {
 
 		prompt := `Extract this OCR text into JSON with fields:
 {
-  "title": "...",
-  "location": "...",
-  "date": "...",
-  "startTime": "...",
-  "endTime": "..."
+  "title": "...", -> it should be string -> with default "event"
+  "location": "...", -> it should be string -> with default ""
+  "date": "...", -> it should be string like 'june 12' -> with default ""
+  "startTime": "...", -> it should be string like '11:23 am' -> with default "12:00 am"
+  "endTime": "..." -> it should be string like '11:23 am' -> with default "11:59 pm"
 }
   make sure you only return the json object nothing more
 ---
