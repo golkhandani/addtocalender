@@ -6,7 +6,7 @@ import (
 )
 
 func LogDev(msg string) {
-	if os.Getenv("GO_ENV") == DEVELOPMENT {
+	if os.Getenv("APP_ENV") == DEVELOPMENT {
 		log.Println(msg)
 	}
 }
