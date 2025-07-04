@@ -1,0 +1,57 @@
+/* Header */
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  text-align: center;
+  margin: 0 auto;
+  padding: 1rem;
+  min-height: 100dvh;
+}
+
+.title-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title-section * {
+  margin: 1rem;
+}
+
+
+.process-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 240px;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease;
+  margin: 0 auto;
+}
+
+
+
+.installBtn {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease;
+}
+
+.iosHint {
+  padding: 1rem;
+  background: var(--border-color);
+  color: var(--text-color);
+  border-radius: 8px;
+  margin: 1rem auto;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.installBtn:hover {
+  background-color: var(--accent-hover);
+}

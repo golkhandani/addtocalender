@@ -1,75 +1,3 @@
-/* Header */
-.header {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  text-align: center;
-  margin: 0 auto;
-  padding: 1rem;
-  min-height: 100dvh;
-}
-
-.title-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.title-section * {
-  margin: 1rem;
-}
-
-.btn {
-  min-height: 48px;
-  max-height: 48px;
-  margin: 1rem auto;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 1rem;
-  text-decoration: none;
-}
-
-
-
-.process-btn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 240px;
-  background-color: var(--accent-color);
-  color: var(--text-color);
-  transition: background-color 0.3s ease;
-}
-
-
-
-.installBtn {
-  background-color: var(--accent-color);
-  color: var(--text-color);
-  transition: background-color 0.3s ease;
-}
-
-.iosHint {
-  padding: 1rem;
-  background: var(--border-color);
-  color: var(--text-color);
-  border-radius: 8px;
-  margin: 1rem auto;
-  text-align: center;
-  font-size: 0.95rem;
-}
-
-.installBtn:hover {
-  background-color: var(--accent-hover);
-}
-
 /* Main & Layout */
 .main {
   min-height: 100dvh;
@@ -104,6 +32,7 @@
   display: flex;
   flex-direction: column;
   justify-content: stretch;
+  overflow: scroll;
 }
 
 .column img {
@@ -131,89 +60,6 @@
 
 .uploadBtn:hover {
   background-color: var(--accent-hover);
-}
-
-/* Form */
-.form {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.form .inputs {
-  display: flex;
-  flex-direction: column;
-}
-
-.form .inputs label {
-  display: flex;
-  flex-direction: column;
-  color: var(--text-color);
-}
-
-.form input {
-  padding: 0.5rem;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  background-color: var(--background-color);
-  color: var(--text-color);
-  transition: border-color 0.2s ease;
-  overflow: visible;
-}
-
-.form input:hover,
-textarea:hover {
-  border-color: var(--accent-color);
-  outline: none;
-}
-
-/* Calendar Button Row */
-.buttonRow {
-  margin: 1rem 0px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: space-between;
-}
-
-.buttonRow button {
-  flex: 1;
-  min-width: 45%;
-  min-height: 48px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-  transition: background-color 0.3s ease;
-}
-
-/* Calendar Button Styles */
-.appleBtn {
-  background-color: #333;
-  color: white;
-}
-
-.appleBtn:hover {
-  background-color: #111;
-}
-
-.googleBtn {
-  background-color: #da0c0c;
-  color: white;
-}
-
-.googleBtn:hover {
-  background-color: #980606;
-}
-
-.outlookBtn {
-  background-color: #0078d4;
-  color: white;
-}
-
-.outlookBtn:hover {
-  background-color: #005da0;
 }
 
 
