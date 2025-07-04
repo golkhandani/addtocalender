@@ -2,13 +2,12 @@ import { isRunningOnMobile } from "../utils/isMobileBrowser";
 import { isRunningStandalone } from "../utils/isRunningStandalone";
 import { useInstallPrompt } from "../utils/useInstallPrompt";
 import styles from "./Header.module.css"
+declare const __APP_VERSION__: string
 
 export default function Header() {
     const isStandalone = isRunningStandalone()
     const isMobile = isRunningOnMobile();
     const { promptInstall } = useInstallPrompt();
-
-
     return (
         <header className={styles.header}>
             <div className={styles['title-section']}>
@@ -40,6 +39,10 @@ export default function Header() {
                     </div>
                 }
             </div>
+
+            <p>
+                Version: {__APP_VERSION__}
+            </p>
 
         </header>
     )
