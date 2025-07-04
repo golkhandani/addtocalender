@@ -24,7 +24,7 @@ export default function App() {
     if (!res.ok) throw new Error('Failed to parse event');
 
     const data = await res.json();
-    setEvents(data.data)
+    setEvents((data.data as EventData[]).filter((e) => e.date != ""))
     return data;
   }
 
